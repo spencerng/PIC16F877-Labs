@@ -59,7 +59,7 @@ setup:
     CLRF TRISB ; all LED outputs
     BANKSEL PORTB
 
-;overhead: 3-4 us
+;overhead: 7-8 us
 main:
 	MOVF STATE, 0
 	MOVWF FSR
@@ -76,7 +76,7 @@ rotateLeft:
 	SUBLW 0x22
 	MOVLW 0x2A
 	BTFSC STATUS, Z
-	MOVWF STATUS
+	MOVWF STATE
 	GOTO main
     
 rotateRight:
@@ -85,7 +85,7 @@ rotateRight:
 	SUBLW 0x2B
 	MOVLW 0x23
 	BTFSC STATUS, Z
-	MOVWF STATUS
+	MOVWF STATE
     GOTO main
     
 oneSecDelay:
@@ -97,6 +97,7 @@ oneSecDelay:
 		GOTO innerLoop1
 	RETURN
 
+;3 us overhead
 twoFiftyMicroDelay:
 	MOVLW d'41'
 	MOVWF COUNT2
