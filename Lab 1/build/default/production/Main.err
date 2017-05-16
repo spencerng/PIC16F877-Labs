@@ -1,9 +1,0 @@
-Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 12 : Found label after column 1. (LED_BIT)
-Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 13 : Found label after column 1. (BUTTON_BIT)
-Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 14 : Found label after column 1. (prevState)
-Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 15 : Found label after column 1. (currentState)
-Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 16 : Found label after column 1. (ledState)
-Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 31 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 32 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 34 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 1\MAIN.ASM 51 : Using default destination of 1 (file).
