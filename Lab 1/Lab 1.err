@@ -2,4 +2,4 @@ Message[301] C:\PROGRAM FILES (X86)\MICROCHIP\MPASM SUITE\P16F887.INC 33 : MESSA
 Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 1\LAB 1.ASM 28 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 1\LAB 1.ASM 30 : Register in operand not in bank 0.  Ensure that bank bits are correct.
 Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 1\LAB 1.ASM 32 : Register in operand not in bank 0.  Ensure that bank bits are correct.
-Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 1\LAB 1.ASM 44 : Using default destination of 1 (file).
+Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 1\LAB 1.ASM 41 : Using default destination of 1 (file).

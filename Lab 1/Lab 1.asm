@@ -29,31 +29,21 @@ setup:
 	BANKSEL TRISB
 	BCF TRISB, LED_BIT ; 0 is output
 	BANKSEL ANSEL
-	CLRF ANSEL
+	CLRF ANSEL ; digital I/O
 	BANKSEL PORTA
-	BSF PORTB, LED_BIT
-	MOVLW 0
-	MOVWF prevState
+	BSF PORTB, LED_BIT ; turn LED on
 	
+switchOff:
+	BTFSS PORTA, BUTTON_BIT
+	GOTO switchOff
 
-    
-main:
-	MOVLW PORTA
-	MOVWF currentState
-	XORWF prevState, 0
-	XORWF PORTB
-	MOVLW currentState
-	MOVWF prevState
-	GOTO main
+toggle:
+	COMF PORTB
 
-ledOn:
-	BSF PORTB, LED_BIT
-	GOTO main
-
-ledOff:
-	BCF PORTB, LED_BIT
-	GOTO main
-
+waitForSwitchOff:
+	BTFSC PORTA, BUTTON_BIT
+	GOTO waitForSwitchOff
+	GOTO switchOff
     
 _end: 
     END

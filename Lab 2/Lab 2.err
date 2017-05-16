@@ -1,0 +1,12 @@
+Message[301] C:\PROGRAM FILES (X86)\MICROCHIP\MPASM SUITE\P16F887.INC 33 : MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
+Warning[205] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 35 : Found directive in column 1. (endm)
+Warning[205] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 40 : Found directive in column 1. (endm)
+Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 55 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 57 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 59 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 74 : Using default destination of 1 (file).
+Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 83 : Using default destination of 1 (file).
+Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 94 : Found label after column 1. (innerLoop1)
+Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 96 : Using default destination of 1 (file).
+Warning[207] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 103 : Found label after column 1. (innerLoop2)
+Message[305] E:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F877-LABS\LAB 2\LAB 2.ASM 107 : Using default destination of 1 (file).

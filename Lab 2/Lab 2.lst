@@ -1,73 +1,174 @@
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  1
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001 ; Write an MPASM program for the PIC16F887 microcontroller 
-                      00002 ; that will toggle an LED when pressing a push button using a polling scheme.
-                      00003     
-                      00004 
-                      00005     
-                      00006 MAIN_PROG CODE
+                      00001 ;Write an MPASM program for the PIC 16F887 Microcontroller
+                      00002 ;that will light 8 LEDs in a round robin fashion. Basically a ;Chaser Light.
+                      00003 ;A switch determines the direction of the moving lights
+                      00004 ;(1: Left to Right, 0: Right to Left).
+                      00005 ;Use the delay loop generation technique to
+                      00006 ;generate a one second delay.
                       00007 
-0000                  00008 START
-                      00009 
-                      00010 #include <p16f887.inc>
+                      00008 
+                      00009 MAIN_PROG CODE
+                      00010 
+0000                  00011 START
+                      00012 
+                      00013 #include <p16f887.inc>
                       00001         LIST
                       00002 ; P16F887.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
 Message[301]: MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
                       00617         LIST
-                      00011  
-  00000000            00012 LED_BIT EQU 0
-  00000000            00013 BUTTON_BIT EQU 0
-  00000020            00014 prevState EQU 0x020 ; previous state of PORTA
-  00000021            00015 currentState EQU 0x021 ; temp current state of push button, 0 or 1
-  00000022            00016 ledState EQU 0x022 ; 0=off, 1=on
-                      00017  
-                      00018  
-0000                  00019 reset:
-                      00020     ORG 0x0000
-0000   2???           00021     GOTO setup
+                      00014 
+                      00015 
+                      00016 
+  00000006            00017 LEDS EQU PORTB
+  00000000            00018 SWITCH_BIT EQU 0
+  00000020            00019 COUNT1 EQU 0x20
+  00000021            00020 COUNT2 EQU 0x21
+  00000022            00021 STATE EQU 0x22
                       00022 
-                      00023 
-0001                  00024 setup:
-0001   1283 1303      00025     BANKSEL PORTA
-0003   0185           00026         CLRF PORTA
-0004   1683 1303      00027         BANKSEL TRISA
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0006   1405           00028     BSF TRISA, BUTTON_BIT ; 1 is input
-0007   1683 1303      00029         BANKSEL TRISB
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0009   1006           00030         BCF TRISB, LED_BIT ; 0 is output
-000A   1683 1703      00031         BANKSEL ANSEL
-Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-000C   0188           00032         CLRF ANSEL ; digital I/O
-000D   1283 1303      00033         BANKSEL PORTA
-000F   1406           00034         BSF PORTB, LED_BIT ; turn LED on
-                      00035         
-0010                  00036 switchOff:
-0010   1C05           00037         BTFSS PORTA, BUTTON_BIT
-0011   2???           00038         GOTO switchOff
-                      00039 
-0012                  00040 toggle:
-Message[305]: Using default destination of 1 (file).
-0012   0986           00041         COMF PORTB
-                      00042 
-0013                  00043 waitForSwitchOff:
-0013   1805           00044         BTFSC PORTA, BUTTON_BIT
-0014   2???           00045         GOTO waitForSwitchOff
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  2
+0000                  00023 reset:
+                      00024     ORG 0x0000
+0000   2???           00025     GOTO setup
+                      00026 
+0001                  00027 int:
+                      00028     ORG 0x004
+0004   2???           00029     GOTO isr
+                      00030 
+                      00031 
+                      00032 MOVLF macro k, f
+                      00033         MOVLW k
+                      00034         MOVWF f
+Warning[205]: Found directive in column 1. (endm)
+                      00035 endm
+                      00036 
+                      00037 MOVFF macro source, dest
+                      00038         MOVF source, 0
+                      00039         MOVWF dest
+Warning[205]: Found directive in column 1. (endm)
+                      00040 endm
+                      00041 
+0005                  00042 setup:
+                      00043         MOVLF b'10000000', 0x23
+0005   3080               M         MOVLW b'10000000'
+0006   00A3               M         MOVWF 0x23
+                      00044         MOVLF b'01000000', 0x24
+0007   3040               M         MOVLW b'01000000'
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0015   2???           00046         GOTO switchOff
-                      00047     
-0016                  00048 _end: 
-                      00049     END
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  3
+0008   00A4               M         MOVWF 0x24
+                      00045         MOVLF b'00100000', 0x25
+0009   3020               M         MOVLW b'00100000'
+000A   00A5               M         MOVWF 0x25
+                      00046         MOVLF b'00010000', 0x26
+000B   3010               M         MOVLW b'00010000'
+000C   00A6               M         MOVWF 0x26
+                      00047         MOVLF b'00001000', 0x27
+000D   3008               M         MOVLW b'00001000'
+000E   00A7               M         MOVWF 0x27
+                      00048         MOVLF b'00000100', 0x28
+000F   3004               M         MOVLW b'00000100'
+0010   00A8               M         MOVWF 0x28
+                      00049         MOVLF b'00000010', 0x29
+0011   3002               M         MOVLW b'00000010'
+0012   00A9               M         MOVWF 0x29
+                      00050         MOVLF b'00000001', 0x2A
+0013   3001               M         MOVLW b'00000001'
+0014   00AA               M         MOVWF 0x2A
+                      00051         MOVLF 0x23, STATE
+0015   3023               M         MOVLW 0x23
+0016   00A2               M         MOVWF STATE
+0017   1283 1303      00052     BANKSEL PORTA
+0019   0185           00053     CLRF PORTA
+001A   1683 1303      00054     BANKSEL TRISA
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+001C   1405           00055     BSF TRISA, SWITCH_BIT ; 1 is input
+001D   1683 1703      00056     BANKSEL ANSEL
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+001F   0188           00057     CLRF ANSEL ; digital I/O
+0020   1683 1303      00058     BANKSEL TRISB
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0022   0186           00059     CLRF TRISB ; all LED outputs
+0023   1283 1303      00060     BANKSEL PORTB
+                      00061 
+                      00062 ;overhead: 3-4 us
+0025                  00063 main:
+0025   0822           00064         MOVF STATE, 0
+0026   0084           00065         MOVWF FSR
+0027   0800           00066         MOVF INDF, 0
+0028   0086           00067         MOVWF PORTB
+0029   2???           00068         CALL oneSecDelay
+002A   1C05           00069     BTFSS PORTA, SWITCH_BIT 
+002B   2???           00070     GOTO rotateLeft ; switch=0, right to left
+002C   2???           00071     GOTO rotateRight ; switch=1, left to right
+                      00072 
+002D                  00073 rotateLeft:
+Message[305]: Using default destination of 1 (file).
+002D   03A2           00074         DECF STATE
+002E   0822           00075         MOVF STATE, 0
+002F   3C22           00076         SUBLW 0x22
+0030   302A           00077         MOVLW 0x2A
+0031   1903           00078         BTFSC STATUS, Z
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0032   0083           00079         MOVWF STATUS
+0033   2???           00080         GOTO main
+                      00081     
+0034                  00082 rotateRight:
+Message[305]: Using default destination of 1 (file).
+0034   0AA2           00083     INCF STATE
+0035   0822           00084     MOVF STATE, 0
+0036   3C2B           00085         SUBLW 0x2B
+0037   3023           00086         MOVLW 0x23
+0038   1903           00087         BTFSC STATUS, Z
+0039   0083           00088         MOVWF STATUS
+003A   2???           00089     GOTO main
+                      00090     
+003B                  00091 oneSecDelay:
+003B   3004           00092         MOVLW d'4'
+003C   00A0           00093         MOVWF COUNT1
+Warning[207]: Found label after column 1. (innerLoop1)
+003D                  00094         innerLoop1:
+003D   2???           00095                 CALL twoFiftyMicroDelay
+Message[305]: Using default destination of 1 (file).
+003E   0BA0           00096                 DECFSZ COUNT1
+003F   2???           00097                 GOTO innerLoop1
+0040   0008           00098         RETURN
+                      00099 
+0041                  00100 twoFiftyMicroDelay:
+0041   3029           00101         MOVLW d'41'
+0042   00A1           00102         MOVWF COUNT2
+Warning[207]: Found label after column 1. (innerLoop2)
+0043                  00103         innerLoop2: 
+0043   0000           00104                 NOP
+0044   0000           00105                 NOP
+0045   0000           00106                 NOP
+Message[305]: Using default destination of 1 (file).
+0046   0BA1           00107                 DECFSZ COUNT2
+0047   2???           00108                 GOTO innerLoop2
+0048   0008           00109         RETURN
+                      00110                 
+                      00111 
+0049                  00112 isr:
+0049   0000           00113     NOP
+004A   100B           00114     BCF INTCON, 0
+004B   108B           00115     BCF INTCON, 1
+004C   0009           00116     RETFIE
+                      00117 
+004D                  00118 _end:
+                      00119     END
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  4
 
 
 SYMBOL TABLE
@@ -126,14 +227,13 @@ BRG6                              00000006
 BRG7                              00000007
 BRG8                              00000000
 BRG9                              00000001
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  4
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  5
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
 BRGH                              00000002
-BUTTON_BIT                        00000000
 C                                 00000000
 C1CH0                             00000000
 C1CH1                             00000001
@@ -185,16 +285,18 @@ CHS1                              00000003
 CHS2                              00000004
 CHS3                              00000005
 CKE                               00000006
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  5
+CKP                               00000004
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  6
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-CKP                               00000004
 CM1CON0                           00000107
 CM2CON0                           00000108
 CM2CON1                           00000109
+COUNT1                            00000020
+COUNT2                            00000021
 CREN                              00000004
 CSRC                              00000007
 D                                 00000005
@@ -243,13 +345,13 @@ IOCB0                             00000000
 IOCB1                             00000001
 IOCB2                             00000002
 IOCB3                             00000003
-IOCB4                             00000004
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  6
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  7
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+IOCB4                             00000004
 IOCB5                             00000005
 IOCB6                             00000006
 IOCB7                             00000007
@@ -257,10 +359,12 @@ IRCF0                             00000004
 IRCF1                             00000005
 IRCF2                             00000006
 IRP                               00000007
-LED_BIT                           00000000
+LEDS                              00000006
 LTS                               00000001
 MC1OUT                            00000007
 MC2OUT                            00000006
+MOVFF                             
+MOVLF                             
 MSK                               00000093
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
@@ -300,15 +404,15 @@ PEIE                              00000006
 PEN                               00000002
 PIE1                              0000008C
 PIE2                              0000008D
-PIR1                              0000000C
-PIR2                              0000000D
-PORTA                             00000005
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  7
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  8
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
 PORTB                             00000006
 PORTC                             00000007
 PORTD                             00000008
@@ -359,15 +463,15 @@ SPBRGH                            0000009A
 SPEN                              00000007
 SR0                               00000006
 SR1                               00000007
-SRCON                             00000185
-SREN                              00000005
-SSPADD                            00000093
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  8
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE  9
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SRCON                             00000185
+SREN                              00000005
+SSPADD                            00000093
 SSPBUF                            00000013
 SSPCON                            00000014
 SSPCON2                           00000091
@@ -382,6 +486,7 @@ SSPMSK                            00000093
 SSPOV                             00000006
 SSPSTAT                           00000094
 START                             00000000
+STATE                             00000022
 STATUS                            00000003
 STRA                              00000000
 STRB                              00000001
@@ -389,6 +494,7 @@ STRC                              00000002
 STRD                              00000003
 STRSYNC                           00000004
 SWDTEN                            00000000
+SWITCH_BIT                        00000000
 SYNC                              00000004
 T0CS                              00000005
 T0IE                              00000005
@@ -416,17 +522,17 @@ TMR1IF                            00000000
 TMR1L                             0000000E
 TMR1ON                            00000000
 TMR2                              00000011
-TMR2IE                            00000001
-TMR2IF                            00000001
-TMR2ON                            00000002
-TOUTPS0                           00000003
-TOUTPS1                           00000004
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE  9
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE 10
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
 TOUTPS2                           00000005
 TOUTPS3                           00000006
 TRISA                             00000085
@@ -475,17 +581,17 @@ WPUB                              00000095
 WPUB0                             00000000
 WPUB1                             00000001
 WPUB2                             00000002
-WPUB3                             00000003
-WPUB4                             00000004
-WPUB5                             00000005
-WPUB6                             00000006
-WPUB7                             00000007
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE 10
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE 11
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+WPUB3                             00000003
+WPUB4                             00000004
+WPUB5                             00000005
+WPUB6                             00000006
+WPUB7                             00000007
 WR                                00000001
 WREN                              00000002
 WRERR                             00000003
@@ -534,26 +640,29 @@ _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FF9
 __16F877A                         00000001
-__DEBUG                           1
-__MPLAB_DEBUGGER_PICKIT2          1
-_end                              00000016
-currentState                      00000021
-ledState                          00000022
-MPASM  5.35                         LAB 1.ASM   5-15-2017  23:06:46         PAGE 11
+MPASM  5.35                         LAB 2.ASM   5-16-2017  0:11:25         PAGE 12
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-prevState                         00000020
+__DEBUG                           1
+__MPLAB_DEBUGGER_PICKIT2          1
+_end                              0000004D
+innerLoop1                        0000003D
+innerLoop2                        00000043
+int                               00000001
+isr                               00000049
+main                              00000025
+oneSecDelay                       0000003B
 reset                             00000000
-setup                             00000001
-switchOff                         00000010
-toggle                            00000012
-waitForSwitchOff                  00000013
+rotateLeft                        0000002D
+rotateRight                       00000034
+setup                             00000005
+twoFiftyMicroDelay                00000041
 
 Errors   :     0
-Warnings :     0 reported,     0 suppressed
-Messages :     5 reported,     0 suppressed
+Warnings :     4 reported,     0 suppressed
+Messages :     8 reported,     0 suppressed
 
 

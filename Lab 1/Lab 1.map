@@ -1,10 +1,10 @@
 MPLINK 4.35, Linker
-Linker Map File - Created Mon May 15 19:55:59 2017
+Linker Map File - Created Mon May 15 23:06:47 2017
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                   .org_0       code   0x000000    program   0x00003a
+                   .org_0       code   0x000000    program   0x00002c
                    .cinit    romdata   0x001800    program   0x000004
                 MAIN_PROG       code   0x001802    program   0x000000
 
@@ -13,9 +13,9 @@ Linker Map File - Created Mon May 15 19:55:59 2017
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x00001c      
+                            0x000000    0x000015      
                             0x001800    0x001801      
-            31 out of 8453 program addresses used, program memory utilization is 0%
+            24 out of 8453 program addresses used, program memory utilization is 0%
 
 
 
@@ -23,12 +23,12 @@ Linker Map File - Created Mon May 15 19:55:59 2017
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
                     START   0x001802    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                     _end   0x00001d    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                   ledOff   0x00001b    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                    ledOn   0x000019    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                     main   0x000012    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+                     _end   0x000016    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
                     reset   0x001802    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
                     setup   0x000001    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+                switchOff   0x000010    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+                   toggle   0x000012    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+         waitForSwitchOff   0x000013    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
 
 
 
@@ -36,10 +36,10 @@ Linker Map File - Created Mon May 15 19:55:59 2017
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
                     setup   0x000001    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                     main   0x000012    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                    ledOn   0x000019    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                   ledOff   0x00001b    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
-                     _end   0x00001d    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+                switchOff   0x000010    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+                   toggle   0x000012    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+         waitForSwitchOff   0x000013    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
+                     _end   0x000016    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
                     START   0x001802    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
                     reset   0x001802    program     static E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 1\Lab 1.asm
 

@@ -1,28 +1,24 @@
-;Write an MPASM program for the PIC microcontroller that controls 
-;three LEDs located on PORTA. Each LED represents the comparison 
-;result of two numbers provided via port B.
-;LED Status:
-;RA0: A < B
-;RA1: A = B
-;RA2: A > B
-; A on B7:B4, B on B3:B0
+;Write an MPASM program for the PIC 16F887 Microcontroller
+;that will light 8 LEDs in a round robin fashion. Basically a ;Chaser Light.
+;A switch determines the direction of the moving lights
+;(1: Left to Right, 0: Right to Left).
+;Use the delay loop generation technique to
+;generate a one second delay.
+
 
 MAIN_PROG CODE
 
 START
 
-#include "p16f887.inc"
+#include <p16f887.inc>
 
-; CONFIG1
-; __config 0xFFF1
- __CONFIG _CONFIG1, _FOSC_XT & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_ON & _IESO_ON & _FCMEN_ON & _LVP_ON
-; CONFIG2
-; __config 0xFFFF
- __CONFIG _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
 
 
 LEDS EQU PORTB
 SWITCH_BIT EQU 0
+COUNT1 EQU 0x20
+COUNT2 EQU 0x21
+STATE EQU 0x22
 
 reset:
     ORG 0x0000
@@ -32,7 +28,27 @@ int:
     ORG 0x004
     GOTO isr
 
+
+MOVLF macro k, f
+	MOVLW k
+	MOVWF f
+endm
+
+MOVFF macro source, dest
+	MOVF source, 0
+	MOVWF dest
+endm
+
 setup:
+	MOVLF b'10000000', 0x23
+	MOVLF b'01000000', 0x24
+	MOVLF b'00100000', 0x25
+	MOVLF b'00010000', 0x26
+	MOVLF b'00001000', 0x27
+	MOVLF b'00000100', 0x28
+	MOVLF b'00000010', 0x29
+	MOVLF b'00000001', 0x2A
+	MOVLF 0x23, STATE
     BANKSEL PORTA
     CLRF PORTA
     BANKSEL TRISA
@@ -41,25 +57,57 @@ setup:
     CLRF ANSEL ; digital I/O
     BANKSEL TRISB
     CLRF TRISB ; all LED outputs
-    MOVLW b'100000'
     BANKSEL PORTB
-    MOVWF PORTB
 
+;overhead: 3-4 us
 main:
-    BANKSEL PORTA
+	MOVF STATE, 0
+	MOVWF FSR
+	MOVF INDF, 0
+	MOVWF PORTB
+	CALL oneSecDelay
     BTFSS PORTA, SWITCH_BIT 
     GOTO rotateLeft ; switch=0, right to left
     GOTO rotateRight ; switch=1, left to right
 
 rotateLeft:
-    BANKSEL PORTB
-    RLF PORTB
-    GOTO main
+	DECF STATE
+	MOVF STATE, 0
+	SUBLW 0x22
+	MOVLW 0x2A
+	BTFSC STATUS, Z
+	MOVWF STATUS
+	GOTO main
     
 rotateRight:
-    BANKSEL PORTB
-    RRF PORTB
+    INCF STATE
+    MOVF STATE, 0
+	SUBLW 0x2B
+	MOVLW 0x23
+	BTFSC STATUS, Z
+	MOVWF STATUS
     GOTO main
+    
+oneSecDelay:
+	MOVLW d'4'
+	MOVWF COUNT1
+	innerLoop1:
+		CALL twoFiftyMicroDelay
+		DECFSZ COUNT1
+		GOTO innerLoop1
+	RETURN
+
+twoFiftyMicroDelay:
+	MOVLW d'41'
+	MOVWF COUNT2
+	innerLoop2: 
+		NOP
+		NOP
+		NOP
+		DECFSZ COUNT2
+		GOTO innerLoop2
+	RETURN
+		
 
 isr:
     NOP
