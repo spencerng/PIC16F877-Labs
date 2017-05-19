@@ -1,0 +1,48 @@
+MPLINK 4.35, Linker
+Linker Map File - Created Fri May 19 08:37:45 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .cinit    romdata   0x001800    program   0x000004
+                MAIN_PROG       code   0x001802    program   0x00005c
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x001800    0x00182f      
+            48 out of 8453 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    START   0x001802    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                     _end   0x001830    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+               checkEqual   0x00181e    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+             checkGreater   0x001822    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                  isEqual   0x001827    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                isGreater   0x00182d    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                   isLess   0x00182a    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                     main   0x001811    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                    setup   0x001802    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    START   0x001802    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                    setup   0x001802    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                     main   0x001811    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+               checkEqual   0x00181e    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+             checkGreater   0x001822    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                  isEqual   0x001827    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                   isLess   0x00182a    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                isGreater   0x00182d    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+                     _end   0x001830    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.asm
+
+
