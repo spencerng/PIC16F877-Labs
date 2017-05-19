@@ -1,0 +1,14 @@
+Message[301] C:\PROGRAM FILES (X86)\MICROCHIP\MPASM SUITE\P16F887.INC 33 : MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 4 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 9 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 18 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 24 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 30 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 36 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 47 : Found directive in column 1. (endm)
+Warning[205] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 57 : Found directive in column 1. (endm)
+Message[302] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\FUNCTIONS.INC 3 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\LAB 3.ASM 29 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\LAB 3.ASM 31 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[305] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\LAB 3.ASM 35 : Using default destination of 1 (file).
+Message[305] C:\USERS\SNG\DOCUMENTS\GITHUB\PIC16F887-LABS\LAB 3\LAB 3.ASM 60 : Using default destination of 1 (file).

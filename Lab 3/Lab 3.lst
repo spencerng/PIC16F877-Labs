@@ -1,211 +1,190 @@
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  1
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001 ;Write an MPASM program for the PIC 16F887 Microcontroller
-                      00002 ;that will light 8 LEDs in a round robin fashion. Basically a ;Chaser Light.
-                      00003 ;A switch determines the direction of the moving lights
-                      00004 ;(1: Left to Right, 0: Right to Left).
-                      00005 ;Use the delay loop generation technique to
-                      00006 ;generate a one second delay.
-                      00007 
-                      00008 MAIN_PROG CODE
+                      00001 ;Write an MPASM program for the PIC microcontroller that controls 
+                      00002 ;three LEDs located on PORTA. Each LED represents the comparison 
+                      00003 ;result of two numbers provided via port B.
+                      00004 ;LED Status:
+                      00005 ;RA0: A < B
+                      00006 ;RA1: A = B
+                      00007 ;RA2: A > B
+                      00008 ; A on B7:B4, B on B3:B0
                       00009 
-0000                  00010 START
+                      00010 MAIN_PROG CODE
                       00011 
-                      00012 #include <p16f887.inc>
+0000                  00012 START
+                      00013 
+                      00014 #include <p16f887.inc>
                       00001         LIST
                       00002 ; P16F887.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
 Message[301]: MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
                       00617         LIST
-                      00013 
-  00000000            00014 SWITCH_BIT EQU 0
-  00000020            00015 COUNT1 EQU 0x20
-  00000021            00016 COUNT2 EQU 0x21
-  00000030            00017 COUNT3 EQU 0x30
-  00000022            00018 STATE EQU 0x22
+                      00015 #include "Functions.inc"
+                      00001 MOVLF macro k, f
+                      00002         MOVLW k
+                      00003         MOVWF f
+Warning[205]: Found directive in column 1. (endm)
+                      00004 endm
+                      00005 
+                      00006 MOVFF macro source, dest
+                      00007         MOVF source, 0
+                      00008         MOVWF dest
+Warning[205]: Found directive in column 1. (endm)
+                      00009 endm
+                      00010 
+                      00011 SWAP macro reg1, reg2, tempAddress
+                      00012         MOVF reg1, 0
+                      00013         MOVWF tempAddress
+                      00014         MOVF reg2, 0
+                      00015         MOVWF reg1
+                      00016         MOVF tempAddress, 0
+                      00017         MOVWF reg2
+Warning[205]: Found directive in column 1. (endm)
+                      00018 endm
                       00019 
-0000                  00020 reset:
-                      00021     ORG 0x0000
-0000   2???           00022     GOTO setup
-                      00023 
-0001                  00024 int:
-                      00025     ORG 0x004
-0004   2???           00026     GOTO isr
-                      00027 
-                      00028 
-                      00029 MOVLF macro k, f
-                      00030         MOVLW k
-                      00031         MOVWF f
+                      00020 ADDLF macro k, f
+                      00021         MOVF f, 0
+                      00022         ADDLW k
+                      00023         MOVWF f
 Warning[205]: Found directive in column 1. (endm)
-                      00032 endm
-                      00033 
-                      00034 MOVFF macro source, dest
-                      00035         MOVF source, 0
-                      00036         MOVWF dest
+                      00024 endm
+                      00025 
+                      00026 ADDFF macro reg1, reg2, sumLoc
+                      00027         MOVWF reg2, 0
+                      00028         ADDWF reg1, 0
+                      00029         MOVWF sumLoc
 Warning[205]: Found directive in column 1. (endm)
-                      00037 endm
-                      00038 
-0005                  00039 setup:
-                      00040     MOVLF b'10000000', 0x23
-0005   3080               M         MOVLW b'10000000'
-0006   00A3               M         MOVWF 0x23
-                      00041     MOVLF b'01000000', 0x24
-0007   3040               M         MOVLW b'01000000'
-0008   00A4               M         MOVWF 0x24
-                      00042     MOVLF b'00100000', 0x25
-0009   3020               M         MOVLW b'00100000'
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  2
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000A   00A5               M         MOVWF 0x25
-                      00043     MOVLF b'00010000', 0x26
-000B   3010               M         MOVLW b'00010000'
-000C   00A6               M         MOVWF 0x26
-                      00044     MOVLF b'00001000', 0x27
-000D   3008               M         MOVLW b'00001000'
-000E   00A7               M         MOVWF 0x27
-                      00045     MOVLF b'00000100', 0x28
-000F   3004               M         MOVLW b'00000100'
-0010   00A8               M         MOVWF 0x28
-                      00046     MOVLF b'00000010', 0x29
-0011   3002               M         MOVLW b'00000010'
-0012   00A9               M         MOVWF 0x29
-                      00047     MOVLF b'00000001', 0x2A
-0013   3001               M         MOVLW b'00000001'
-0014   00AA               M         MOVWF 0x2A
-                      00048     MOVLF 0x25, STATE
-0015   3025               M         MOVLW 0x25
-0016   00A2               M         MOVWF STATE
-0017   1683 1303      00049     BANKSEL TRISB
+                      00030 endm
+                      00031 
+                      00032 SUBLF macro k, f
+                      00033         MOVF f, 0
+                      00034         SUBLW k
+                      00035         MOVWF f
+Warning[205]: Found directive in column 1. (endm)
+                      00036 endm
+                      00037 
+                      00038 MULTLW macro k, countAddress, tempAddress
+                      00039         MOVWF tempAddress
+                      00040         MOVLF k, countAddress
+                      00041         MOVLW 0
+                      00042         loop:
+                      00043                 ADDWF tempAddress, 0
+                      00044                 DECFSZ countAddress
+                      00045                 GOTO loop
+                      00046         NOP
+Warning[205]: Found directive in column 1. (endm)
+                      00047 endm
+                      00048 
+                      00049 MULTFF macro reg1, reg2, countAddress, resultAddress
+                      00050         MOVFF reg2, countAddress
+                      00051         MOVLF 0, resultAddress
+                      00052         loop:
+                      00053                 ADDFF reg1, resultAddress, resultAdress
+                      00054                 DECFSZ countAddress
+                      00055                 GOTO loop
+                      00056         NOP
+Warning[205]: Found directive in column 1. (endm)
+                      00057 endm
+                      00016 
+  00000001            00017 LESS EQU b'00000001'
+  00000002            00018 EQUAL EQU b'00000010'
+  00000004            00019 GREATER EQU b'00000100'
+  00000020            00020 A_VAL EQU 0x20
+  00000021            00021 B_VAL EQU 0x21
+                      00022 
+0000                  00023 setup:
+0000   1283 1303      00024     BANKSEL PORTA
+0002   0185           00025     CLRF PORTA
+0003   1683 1303      00026     BANKSEL TRISB
+                      00027         MOVLF b'11111111', TRISB ; 1 is input
+0005   30FF               M         MOVLW b'11111111'
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-0019   1406           00050     BSF TRISB, SWITCH_BIT ; 1 is input
-001A   1683 1303      00051     BANKSEL TRISA
+0006   0086               M         MOVWF TRISB
+0007   1683 1303      00028     BANKSEL TRISA
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001C   0185           00052     CLRF TRISA ; all LED outputs
-001D   1683 1703      00053         BANKSEL ANSEL
+0009   0185           00029     CLRF TRISA ; all LED outputs
+000A   1683 1703      00030         BANKSEL ANSEL
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
-001F   0188           00054     CLRF ANSEL ; digital I/O
-0020   1283 1303      00055     BANKSEL PORTA
-                      00056 
-                      00057 ;total overhead (incl. rotates but not delay): 17-23 us
-                      00058 ;delay is actually 1.000036-1.000042 s 
-0022                  00059 main:
-                      00060         MOVFF STATE, FSR
-0022   0822               M         MOVF STATE,  0
-0023   0084               M         MOVWF FSR
-                      00061         MOVFF INDF, PORTA
-0024   0800               M         MOVF INDF,   0
-0025   0085               M         MOVWF PORTA
-0026   2???           00062         CALL oneSecDelay
-Message[305]: Using default destination of 1 (file).
-0027   0886           00063         MOVF PORTB
-0028   1C06           00064     BTFSS PORTB, SWITCH_BIT 
-0029   2???           00065     GOTO rotateLeft ; switch=0, right to left
-002A   2???           00066     GOTO rotateRight ; switch=1, left to right
-                      00067 
-                      00068 ;overhead: 7-12 us
-002B                  00069 rotateLeft:
-Message[305]: Using default destination of 1 (file).
-002B   03A2           00070         DECF STATE
-002C   0822           00071         MOVF STATE, 0
-002D   3C22           00072         SUBLW 0x22
-002E   1903           00073         BTFSC STATUS, Z
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  3
+000C   0188           00031     CLRF ANSEL ; digital I/O
+000D   1283 1303      00032         BANKSEL PORTA
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-002F   2???           00074         CALL lastState
-0030   2???           00075         GOTO main
-                      00076         
-0031                  00077 lastState:
-                      00078         MOVLF 0x2A, STATE
-0031   302A               M         MOVLW 0x2A
-0032   00A2               M         MOVWF STATE
-0033   0008           00079         RETURN
-                      00080         
-0034                  00081 rotateRight:
+                      00033     
+000F                  00034 main:
 Message[305]: Using default destination of 1 (file).
-0034   0AA2           00082     INCF STATE
-0035   0822           00083     MOVF STATE, 0
-0036   3C2B           00084         SUBLW 0x2B
-0037   1903           00085         BTFSC STATUS, Z
-0038   2???           00086         CALL firstState
-0039   2???           00087     GOTO main
-                      00088         
-003A                  00089 firstState:
-                      00090     MOVLF 0x23, STATE
-003A   3023               M         MOVLW 0x23
-003B   00A2               M         MOVWF STATE
-003C   0008           00091         RETURN
-                      00092 
-                      00093 ;overhead: 3 us, tL = 250.004 ms
-                      00094 ;actually 1.000019 s (incl. overhead)
-003D                  00095 oneSecDelay:
-                      00096         MOVLF d'4', COUNT3
-003D   3004               M         MOVLW d'4'
-003E   00B0               M         MOVWF COUNT3
-Warning[207]: Found label after column 1. (innerLoop3)
-003F                  00097         innerLoop3:
-003F   2???           00098                 CALL twoFiftyMilliDelay
+000F   0886           00035     MOVF PORTB
+                      00036         MOVFF PORTB, B_VAL
+0010   0806               M         MOVF PORTB,  0
+0011   00A1               M         MOVWF B_VAL
+0012   0E06           00037         SWAPF PORTB, 0
+0013   00A0           00038         MOVWF A_VAL
+0014   13A0           00039         BCF A_VAL, 7
+0015   1320           00040         BCF A_VAL, 6
+0016   12A0           00041         BCF A_VAL, 5
+0017   1220           00042         BCF A_VAL, 4
+0018   13A1           00043         BCF B_VAL, 7
+0019   1321           00044         BCF B_VAL, 6
+001A   12A1           00045         BCF B_VAL, 5
+001B   1221           00046         BCF B_VAL, 4
+                      00047 
+                      00048 
+001C                  00049 checkEqual:
+001C   0820           00050     MOVF A_VAL, 0
+001D   3C21           00051         SUBLW B_VAL
+001E   1903           00052         BTFSC STATUS, Z
+001F   2???           00053         GOTO isEqual
+                      00054 
+                      00055         
+                      00056 ;does less than ie (101-111) always result in C=0?
+                      00057 ;does greater than ie (111-101) always result in C=1?
+0020                  00058 checkGreater:
+0020   0821           00059         MOVF B_VAL, 0
 Message[305]: Using default destination of 1 (file).
-0040   0BB0           00099                 DECFSZ COUNT3
-0041   2???           00100                 GOTO innerLoop3
-0042   0008           00101         RETURN
-                      00102 
-                      00103 ;overhead: 3 us, tL = 1.004 ms (incl. inner loop)
-                      00104 ;actually 249.999 ms (incl. overhead)
-0043                  00105 twoFiftyMilliDelay:
-                      00106         MOVLF d'249', COUNT1
-0043   30F9               M         MOVLW d'249'
-0044   00A0               M         MOVWF COUNT1
-Warning[207]: Found label after column 1. (innerLoop1)
-0045                  00107         innerLoop1:
-0045   2???           00108                 CALL oneMilliDelay
-Message[305]: Using default destination of 1 (file).
-0046   0BA0           00109                 DECFSZ COUNT1
-0047   2???           00110                 GOTO innerLoop1
-0048   0008           00111         RETURN
-                      00112 
-                      00113 ;3 us overhead, tL = 6 us
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  4
+0021   02A0           00060         SUBWF A_VAL ; A-B
+0022   1C03           00061         BTFSS STATUS, C 
+0023   2???           00062         GOTO isLess
+0024   2???           00063         GOTO isGreater 
+                      00064     
+0025                  00065 isEqual:
+                      00066         MOVLF EQUAL, PORTA
+0025   3002               M         MOVLW EQUAL
+0026   0085               M         MOVWF PORTA
+0027   2???           00067         GOTO main
+                      00068         
+0028                  00069 isLess:
+                      00070         MOVLF LESS, PORTA
+0028   3001               M         MOVLW LESS
+0029   0085               M         MOVWF PORTA
+002A   2???           00071         GOTO main
+                      00072         
+002B                  00073 isGreater:
+                      00074         MOVLF GREATER, PORTA
+002B   3004               M         MOVLW GREATER
+002C   0085               M         MOVWF PORTA
+002D   2???           00075         GOTO main
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00114 ;actually 999 us (incl. overhead)
-0049                  00115 oneMilliDelay:
-                      00116         MOVLF d'166', COUNT2
-0049   30A6               M         MOVLW d'166'
-004A   00A1               M         MOVWF COUNT2
-Warning[207]: Found label after column 1. (innerLoop2)
-004B                  00117         innerLoop2: 
-004B   0000           00118                 NOP
-004C   0000           00119                 NOP
-004D   0000           00120                 NOP
-Message[305]: Using default destination of 1 (file).
-004E   0BA1           00121                 DECFSZ COUNT2
-004F   2???           00122                 GOTO innerLoop2
-0050   0008           00123         RETURN
-                      00124                 
-                      00125 
-0051                  00126 isr:
-0051   0000           00127     NOP
-0052   100B           00128     BCF INTCON, 0
-0053   108B           00129     BCF INTCON, 1
-0054   0009           00130     RETFIE
-                      00131 
-0055                  00132 _end:
-                      00133     END
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  5
+                      00076 
+002E                  00077 _end:
+                      00078         END
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  5
 
 
 SYMBOL TABLE
@@ -221,6 +200,8 @@ ADCON1                            0000009F
 ADCS0                             00000006
 ADCS1                             00000007
 ADDEN                             00000003
+ADDFF                             
+ADDLF                             
 ADFM                              00000007
 ADIE                              00000006
 ADIF                              00000006
@@ -243,6 +224,7 @@ ANS8                              00000000
 ANS9                              00000001
 ANSEL                             00000188
 ANSELH                            00000189
+A_VAL                             00000020
 BAUDCTL                           00000187
 BCLIE                             00000003
 BCLIF                             00000003
@@ -261,16 +243,17 @@ BRG3                              00000003
 BRG4                              00000004
 BRG5                              00000005
 BRG6                              00000006
-BRG7                              00000007
-BRG8                              00000000
-BRG9                              00000001
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  6
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  6
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+BRG7                              00000007
+BRG8                              00000000
+BRG9                              00000001
 BRGH                              00000002
+B_VAL                             00000021
 C                                 00000000
 C1CH0                             00000000
 C1CH1                             00000001
@@ -319,22 +302,19 @@ CCPR2H                            0000001C
 CCPR2L                            0000001B
 CHS0                              00000002
 CHS1                              00000003
-CHS2                              00000004
-CHS3                              00000005
-CKE                               00000006
-CKP                               00000004
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  7
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  7
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+CHS2                              00000004
+CHS3                              00000005
+CKE                               00000006
+CKP                               00000004
 CM1CON0                           00000107
 CM2CON0                           00000108
 CM2CON1                           00000109
-COUNT1                            00000020
-COUNT2                            00000021
-COUNT3                            00000030
 CREN                              00000004
 CSRC                              00000007
 D                                 00000005
@@ -360,6 +340,7 @@ EEDATH                            0000010E
 EEIE                              00000004
 EEIF                              00000004
 EEPGD                             00000007
+EQUAL                             00000002
 F                                 00000001
 FERR                              00000002
 FSR                               00000004
@@ -368,6 +349,7 @@ GCEN                              00000007
 GIE                               00000007
 GO                                00000001
 GO_DONE                           00000001
+GREATER                           00000004
 HTS                               00000002
 I2C_DATA                          00000005
 I2C_READ                          00000002
@@ -379,15 +361,15 @@ INTE                              00000004
 INTEDG                            00000006
 INTF                              00000001
 IOCB                              00000096
-IOCB0                             00000000
-IOCB1                             00000001
-IOCB2                             00000002
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  8
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  8
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+IOCB0                             00000000
+IOCB1                             00000001
+IOCB2                             00000002
 IOCB3                             00000003
 IOCB4                             00000004
 IOCB5                             00000005
@@ -397,12 +379,15 @@ IRCF0                             00000004
 IRCF1                             00000005
 IRCF2                             00000006
 IRP                               00000007
+LESS                              00000001
 LTS                               00000001
 MC1OUT                            00000007
 MC2OUT                            00000006
 MOVFF                             
 MOVLF                             
 MSK                               00000093
+MULTFF                            
+MULTLW                            
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
 NOT_BO                            00000000
@@ -435,18 +420,18 @@ PDC1                              00000001
 PDC2                              00000002
 PDC3                              00000003
 PDC4                              00000004
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 PDC5                              00000005
 PDC6                              00000006
 PEIE                              00000006
 PEN                               00000002
 PIE1                              0000008C
 PIE2                              0000008D
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE  9
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 PIR1                              0000000C
 PIR2                              0000000D
 PORTA                             00000005
@@ -494,18 +479,18 @@ SCKP                              00000004
 SCS                               00000000
 SEN                               00000000
 SENDB                             00000003
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 SMP                               00000007
 SPBRG                             00000099
 SPBRGH                            0000009A
 SPEN                              00000007
 SR0                               00000006
 SR1                               00000007
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE 10
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 SRCON                             00000185
 SREN                              00000005
 SSPADD                            00000093
@@ -523,15 +508,15 @@ SSPMSK                            00000093
 SSPOV                             00000006
 SSPSTAT                           00000094
 START                             00000000
-STATE                             00000022
 STATUS                            00000003
 STRA                              00000000
 STRB                              00000001
 STRC                              00000002
 STRD                              00000003
 STRSYNC                           00000004
+SUBLF                             
+SWAP                              
 SWDTEN                            00000000
-SWITCH_BIT                        00000000
 SYNC                              00000004
 T0CS                              00000005
 T0IE                              00000005
@@ -553,18 +538,18 @@ TMR0IE                            00000005
 TMR0IF                            00000002
 TMR1CS                            00000001
 TMR1GE                            00000006
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 TMR1H                             0000000F
 TMR1IE                            00000000
 TMR1IF                            00000000
 TMR1L                             0000000E
 TMR1ON                            00000000
 TMR2                              00000011
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE 11
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 TMR2IE                            00000001
 TMR2IF                            00000001
 TMR2ON                            00000002
@@ -612,18 +597,18 @@ WCOL                              00000007
 WDTCON                            00000105
 WDTPS0                            00000001
 WDTPS1                            00000002
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 WDTPS2                            00000003
 WDTPS3                            00000004
 WPUB                              00000095
 WPUB0                             00000000
 WPUB1                             00000001
 WPUB2                             00000002
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE 12
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 WPUB3                             00000003
 WPUB4                             00000004
 WPUB5                             00000005
@@ -671,39 +656,30 @@ _PWRTE_OFF                        00003FFF
 _PWRTE_ON                         00003FEF
 _WDT_OFF                          00003FF7
 _WDT_ON                           00003FFF
+MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 13
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
 _WRT_1FOURTH                      00003BFF
 _WRT_256                          00003DFF
 _WRT_HALF                         000039FF
 _WRT_OFF                          00003FFF
 _XT_OSC                           00003FF9
 __16F877A                         00000001
-MPASM  5.35                         LAB 2.ASM   5-19-2017  8:31:08         PAGE 13
-
-
-SYMBOL TABLE
-  LABEL                             VALUE 
-
 __DEBUG                           1
-__MPLAB_DEBUGGER_PICKIT2          1
-_end                              00000055
-firstState                        0000003A
-innerLoop1                        00000045
-innerLoop2                        0000004B
-innerLoop3                        0000003F
-int                               00000001
-isr                               00000051
-lastState                         00000031
-main                              00000022
-oneMilliDelay                     00000049
-oneSecDelay                       0000003D
-reset                             00000000
-rotateLeft                        0000002B
-rotateRight                       00000034
-setup                             00000005
-twoFiftyMilliDelay                00000043
+_end                              0000002E
+checkEqual                        0000001C
+checkGreater                      00000020
+isEqual                           00000025
+isGreater                         0000002B
+isLess                            00000028
+main                              0000000F
+setup                             00000000
 
 Errors   :     0
-Warnings :     5 reported,     0 suppressed
-Messages :    10 reported,     0 suppressed
+Warnings :     8 reported,     0 suppressed
+Messages :     6 reported,     0 suppressed
 
 

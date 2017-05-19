@@ -11,61 +11,68 @@ MAIN_PROG CODE
 
 START
 
-#include "p16f887.inc"
+#include <p16f887.inc>
+#include "Functions.inc"
 
-; CONFIG1
-; __config 0xFFF1
- __CONFIG _CONFIG1, _FOSC_XT & _WDTE_OFF & _PWRTE_OFF & _MCLRE_ON & _CP_OFF & _CPD_OFF & _BOREN_ON & _IESO_ON & _FCMEN_ON & _LVP_ON
-; CONFIG2
-; __config 0xFFFF
- __CONFIG _CONFIG2, _BOR4V_BOR40V & _WRT_OFF
-
-
-LEDS EQU PORTB
-SWITCH_BIT EQU 0
-
-reset:
-    ORG 0x0000
-    GOTO setup
-
-int:
-    ORG 0x004
-    GOTO isr
+LESS EQU b'00000001'
+EQUAL EQU b'00000010'
+GREATER EQU b'00000100'
+A_VAL EQU 0x20
+B_VAL EQU 0x21
 
 setup:
     BANKSEL PORTA
     CLRF PORTA
-    BANKSEL TRISA
-    BSF TRISA, SWITCH_BIT ; 1 is input
-    BANKSEL ANSEL
-    CLRF ANSEL ; digital I/O
     BANKSEL TRISB
-    CLRF TRISB ; all LED outputs
-    MOVLW b'100000'
-    BANKSEL PORTB
-    MOVWF PORTB
-
-main:
-    BANKSEL PORTA
-    BTFSS PORTA, SWITCH_BIT 
-    GOTO rotateLeft ; switch=0, right to left
-    GOTO rotateRight ; switch=1, left to right
-
-rotateLeft:
-    BANKSEL PORTB
-    RLF PORTB
-    GOTO main
+	MOVLF b'11111111', TRISB ; 1 is input
+    BANKSEL TRISA
+    CLRF TRISA ; all LED outputs
+	BANKSEL ANSEL
+    CLRF ANSEL ; digital I/O
+	BANKSEL PORTA
     
-rotateRight:
-    BANKSEL PORTB
-    RRF PORTB
-    GOTO main
+main:
+    MOVF PORTB
+	MOVFF PORTB, B_VAL
+	SWAPF PORTB, 0
+	MOVWF A_VAL
+	BCF A_VAL, 7
+	BCF A_VAL, 6
+	BCF A_VAL, 5
+	BCF A_VAL, 4
+	BCF B_VAL, 7
+	BCF B_VAL, 6
+	BCF B_VAL, 5
+	BCF B_VAL, 4
 
-isr:
-    NOP
-    BCF INTCON, 0
-    BCF INTCON, 1
-    RETFIE
+
+checkEqual:
+    MOVF A_VAL, 0
+	SUBLW B_VAL
+	BTFSC STATUS, Z
+	GOTO isEqual
+
+	
+;does less than ie (101-111) always result in C=0?
+;does greater than ie (111-101) always result in C=1?
+checkGreater:
+	MOVF B_VAL, 0
+	SUBWF A_VAL ; A-B
+	BTFSS STATUS, C 
+	GOTO isLess
+	GOTO isGreater 
+    
+isEqual:
+	MOVLF EQUAL, PORTA
+	GOTO main
+	
+isLess:
+	MOVLF LESS, PORTA
+	GOTO main
+	
+isGreater:
+	MOVLF GREATER, PORTA
+	GOTO main
 
 _end:
-    END
+	END

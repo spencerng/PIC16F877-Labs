@@ -2,7 +2,7 @@
 MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
 Version=1.0
 [File000]
-Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 2\Lab 2.o
+Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2\Lab 2.o
 Folder=Intermediary
 DeviceName=PIC16F877A
 LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
@@ -15,7 +15,7 @@ ToolArgsString=
 TraceCmdString=
 DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_PICKIT2=1
 [File001]
-Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 2\Lab 2.err
+Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2\Lab 2.err
 Folder=Intermediary
 DeviceName=PIC16F877A
 LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
@@ -28,7 +28,7 @@ ToolArgsString=
 TraceCmdString=
 DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_PICKIT2=1
 [File002]
-Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 2\Lab 2.lst
+Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2\Lab 2.lst
 Folder=Output
 DeviceName=PIC16F877A
 LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
@@ -41,7 +41,7 @@ ToolArgsString=
 TraceCmdString=
 DebugOptions=/d__DEBUG=1 /d__MPLAB_DEBUGGER_PICKIT2=1
 [File003]
-Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 2\Lab 2.cof
+Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2\Lab 2.cof
 Folder=Output
 DeviceName=PIC16F877A
 LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
@@ -54,7 +54,7 @@ ToolArgsString=/o"$(BINDIR_)$(TARGETBASE).cof" /M"$(BINDIR_)$(TARGETBASE).map" /
 TraceCmdString=
 DebugOptions=/z__MPLAB_DEBUG=1 /z__MPLAB_DEBUGGER_PICKIT2=1 /z__ICD2RAM=1
 [File004]
-Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 2\Lab 2.hex
+Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2\Lab 2.hex
 Folder=Output
 DeviceName=PIC16F877A
 LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
