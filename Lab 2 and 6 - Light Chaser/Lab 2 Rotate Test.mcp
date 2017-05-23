@@ -25,16 +25,12 @@ subfolder_lib=
 subfolder_lkr=
 [FILE_SUBFOLDERS]
 file_000=.
-file_001=.
 [GENERATED_FILES]
 file_000=no
-file_001=no
 [OTHER_FILES]
 file_000=no
-file_001=no
 [FILE_INFO]
-file_000=Lab 2.asm
-file_001=Functions.inc
+file_000=Lab 2 Rotate.asm
 [SUITE_INFO]
 suite_guid={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
 suite_state=generate-relocatable-code

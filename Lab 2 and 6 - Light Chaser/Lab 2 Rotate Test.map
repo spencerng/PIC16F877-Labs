@@ -1,0 +1,67 @@
+MPLINK 4.35, Linker
+Linker Map File - Created Fri May 19 11:37:02 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                MAIN_PROG       code   0x000003    program   0x000000
+                   .org_1       code   0x000004    program   0x000076
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x00003e      
+            62 out of 8453 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    START   0x000003    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                     _end   0x00003f    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               firstState   0x000023    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               innerLoop1   0x00002f    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               innerLoop2   0x000035    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               innerLoop3   0x000029    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                      int   0x000001    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                      isr   0x00003b    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                lastState   0x00001b    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                     main   0x000012    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+            oneMilliDelay   0x000033    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+              oneSecDelay   0x000027    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                    reset   0x000003    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               rotateLeft   0x000017    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+              rotateRight   0x00001f    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                    setup   0x000005    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+       twoFiftyMilliDelay   0x00002d    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                      int   0x000001    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                    START   0x000003    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                    reset   0x000003    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                    setup   0x000005    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                     main   0x000012    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               rotateLeft   0x000017    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                lastState   0x00001b    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+              rotateRight   0x00001f    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               firstState   0x000023    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+              oneSecDelay   0x000027    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               innerLoop3   0x000029    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+       twoFiftyMilliDelay   0x00002d    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               innerLoop1   0x00002f    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+            oneMilliDelay   0x000033    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+               innerLoop2   0x000035    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                      isr   0x00003b    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+                     _end   0x00003f    program     static C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 2 - Light Chaser\Lab 2 Rotate.asm
+
+

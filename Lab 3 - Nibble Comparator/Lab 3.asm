@@ -12,7 +12,7 @@ MAIN_PROG CODE
 START
 
 #include <p16f887.inc>
-#include "Functions.inc"
+#include "../Functions.inc"
 
 LESS EQU b'00000001'
 EQUAL EQU b'00000010'

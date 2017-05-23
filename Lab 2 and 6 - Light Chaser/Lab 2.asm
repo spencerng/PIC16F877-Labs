@@ -48,8 +48,8 @@ setup:
     MOVLF 0x25, STATE
     BANKSEL TRISB
     BSF TRISB, SWITCH_BIT ; 1 is input
-    BANKSEL TRISA
-    CLRF TRISA ; all LED outputs
+    BANKSEL TRISC
+    CLRF TRISC ; all LED outputs
 	BANKSEL ANSEL
     CLRF ANSEL ; digital I/O
     BANKSEL PORTA
@@ -58,7 +58,7 @@ setup:
 ;delay is actually 1.000036-1.000042 s 
 main:
 	MOVFF STATE, FSR
-	MOVFF INDF, PORTA
+	MOVFF INDF, PORTC
 	CALL oneSecDelay
 	MOVF PORTB
     BTFSS PORTB, SWITCH_BIT 
