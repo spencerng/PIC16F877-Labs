@@ -1,4 +1,4 @@
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  1
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -22,7 +22,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00002 ; P16F887.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
 Message[301]: MESSAGE: (Processor-header file mismatch.  Verify selected processor.)
                       00617         LIST
-                      00015 #include "Functions.inc"
+                      00015 #include "../Functions.inc"
                       00001 MOVLF macro k, f
                       00002         MOVLW k
                       00003         MOVWF f
@@ -57,7 +57,7 @@ Warning[205]: Found directive in column 1. (endm)
                       00028         ADDWF reg1, 0
                       00029         MOVWF sumLoc
 Warning[205]: Found directive in column 1. (endm)
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  2
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ Message[302]: Register in operand not in bank 0.  Ensure that bank bits are corr
 Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
 000C   0188           00031     CLRF ANSEL ; digital I/O
 000D   1283 1303      00032         BANKSEL PORTA
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  3
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -131,60 +131,50 @@ Message[305]: Using default destination of 1 (file).
 0011   00A1               M         MOVWF B_VAL
 0012   0E06           00037         SWAPF PORTB, 0
 0013   00A0           00038         MOVWF A_VAL
-0014   13A0           00039         BCF A_VAL, 7
-0015   1320           00040         BCF A_VAL, 6
-0016   12A0           00041         BCF A_VAL, 5
-0017   1220           00042         BCF A_VAL, 4
-0018   13A1           00043         BCF B_VAL, 7
-0019   1321           00044         BCF B_VAL, 6
-001A   12A1           00045         BCF B_VAL, 5
-001B   1221           00046         BCF B_VAL, 4
-                      00047 
-                      00048 
-001C                  00049 checkEqual:
-001C   0820           00050     MOVF A_VAL, 0
-001D   3C21           00051         SUBLW B_VAL
-001E   1903           00052         BTFSC STATUS, Z
-001F   2???           00053         GOTO isEqual
-                      00054 
-                      00055         
-                      00056 ;does less than ie (101-111) always result in C=0?
-                      00057 ;does greater than ie (111-101) always result in C=1?
-0020                  00058 checkGreater:
-0020   0821           00059         MOVF B_VAL, 0
+0014   300F           00039         MOVLW 0x0F
 Message[305]: Using default destination of 1 (file).
-0021   02A0           00060         SUBWF A_VAL ; A-B
-0022   1C03           00061         BTFSS STATUS, C 
-0023   2???           00062         GOTO isLess
-0024   2???           00063         GOTO isGreater 
-                      00064     
-0025                  00065 isEqual:
-                      00066         MOVLF EQUAL, PORTA
-0025   3002               M         MOVLW EQUAL
-0026   0085               M         MOVWF PORTA
-0027   2???           00067         GOTO main
-                      00068         
-0028                  00069 isLess:
-                      00070         MOVLF LESS, PORTA
-0028   3001               M         MOVLW LESS
-0029   0085               M         MOVWF PORTA
-002A   2???           00071         GOTO main
-                      00072         
-002B                  00073 isGreater:
-                      00074         MOVLF GREATER, PORTA
-002B   3004               M         MOVLW GREATER
-002C   0085               M         MOVWF PORTA
-002D   2???           00075         GOTO main
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  4
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-                      00076 
-002E                  00077 _end:
-                      00078         END
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  5
+0015   05A0           00040         ANDWF A_VAL
+Message[305]: Using default destination of 1 (file).
+0016   05A1           00041         ANDWF B_VAL
+                      00042 
+0017                  00043 checkEqual:
+0017   0820           00044     MOVF A_VAL, 0
+0018   3C21           00045         SUBLW B_VAL
+0019   1903           00046         BTFSC STATUS, Z
+001A   2???           00047         GOTO isEqual
+                      00048 
+                      00049         
+                      00050 ;does less than ie (101-111) always result in C=0?
+                      00051 ;does greater than ie (111-101) always result in C=1?
+001B                  00052 checkGreater:
+001B   0821           00053         MOVF B_VAL, 0
+Message[305]: Using default destination of 1 (file).
+001C   02A0           00054         SUBWF A_VAL ; A-B
+001D   1C03           00055         BTFSS STATUS, C 
+001E   2???           00056         GOTO isLess
+001F   2???           00057         GOTO isGreater 
+                      00058     
+0020                  00059 isEqual:
+                      00060         MOVLF EQUAL, PORTA
+0020   3002               M         MOVLW EQUAL
+0021   0085               M         MOVWF PORTA
+0022   2???           00061         GOTO main
+                      00062         
+0023                  00063 isLess:
+                      00064         MOVLF LESS, PORTA
+0023   3001               M         MOVLW LESS
+0024   0085               M         MOVWF PORTA
+0025   2???           00065         GOTO main
+                      00066         
+0026                  00067 isGreater:
+                      00068         MOVLF GREATER, PORTA
+0026   3004               M         MOVLW GREATER
+0027   0085               M         MOVWF PORTA
+0028   2???           00069         GOTO main
+                      00070 
+0029                  00071 _end:
+                      00072         END
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  4
 
 
 SYMBOL TABLE
@@ -243,7 +233,7 @@ BRG3                              00000003
 BRG4                              00000004
 BRG5                              00000005
 BRG6                              00000006
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  6
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  5
 
 
 SYMBOL TABLE
@@ -302,7 +292,7 @@ CCPR2H                            0000001C
 CCPR2L                            0000001B
 CHS0                              00000002
 CHS1                              00000003
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  7
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  6
 
 
 SYMBOL TABLE
@@ -361,7 +351,7 @@ INTE                              00000004
 INTEDG                            00000006
 INTF                              00000001
 IOCB                              00000096
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  8
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  7
 
 
 SYMBOL TABLE
@@ -420,7 +410,7 @@ PDC1                              00000001
 PDC2                              00000002
 PDC3                              00000003
 PDC4                              00000004
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE  9
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  8
 
 
 SYMBOL TABLE
@@ -479,7 +469,7 @@ SCKP                              00000004
 SCS                               00000000
 SEN                               00000000
 SENDB                             00000003
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 10
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE  9
 
 
 SYMBOL TABLE
@@ -538,7 +528,7 @@ TMR0IE                            00000005
 TMR0IF                            00000002
 TMR1CS                            00000001
 TMR1GE                            00000006
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 11
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE 10
 
 
 SYMBOL TABLE
@@ -597,7 +587,7 @@ WCOL                              00000007
 WDTCON                            00000105
 WDTPS0                            00000001
 WDTPS1                            00000002
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 12
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE 11
 
 
 SYMBOL TABLE
@@ -656,7 +646,7 @@ _PWRTE_OFF                        00003FFF
 _PWRTE_ON                         00003FEF
 _WDT_OFF                          00003FF7
 _WDT_ON                           00003FFF
-MPASM  5.35                         LAB 3.ASM   5-19-2017  8:37:44         PAGE 13
+MPASM  5.35                         LAB 3.ASM   5-29-2017  23:14:26         PAGE 12
 
 
 SYMBOL TABLE
@@ -669,17 +659,17 @@ _WRT_OFF                          00003FFF
 _XT_OSC                           00003FF9
 __16F877A                         00000001
 __DEBUG                           1
-_end                              0000002E
-checkEqual                        0000001C
-checkGreater                      00000020
-isEqual                           00000025
-isGreater                         0000002B
-isLess                            00000028
+_end                              00000029
+checkEqual                        00000017
+checkGreater                      0000001B
+isEqual                           00000020
+isGreater                         00000026
+isLess                            00000023
 main                              0000000F
 setup                             00000000
 
 Errors   :     0
 Warnings :     8 reported,     0 suppressed
-Messages :     6 reported,     0 suppressed
+Messages :     8 reported,     0 suppressed
 
 

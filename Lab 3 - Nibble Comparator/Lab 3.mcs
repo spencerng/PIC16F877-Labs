@@ -28,6 +28,32 @@ ToolArgsString=
 TraceCmdString=
 DebugOptions=/d__DEBUG=1
 [File002]
+Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 3 - Nibble Comparator\Lab 3.o
+Folder=Intermediary
+DeviceName=PIC16F877A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Lab 3.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-relocatable-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1
+[File003]
+Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 3 - Nibble Comparator\Lab 3.err
+Folder=Intermediary
+DeviceName=PIC16F877A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Lab 3.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-relocatable-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1
+[File004]
 Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.lst
 Folder=Output
 DeviceName=PIC16F877A
@@ -40,7 +66,7 @@ SuiteArgsString=generate-relocatable-code
 ToolArgsString=
 TraceCmdString=
 DebugOptions=/d__DEBUG=1
-[File003]
+[File005]
 Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.cof
 Folder=Output
 DeviceName=PIC16F877A
@@ -53,8 +79,47 @@ SuiteArgsString=generate-relocatable-code
 ToolArgsString=/o"$(BINDIR_)$(TARGETBASE).cof" /M"$(BINDIR_)$(TARGETBASE).map" /W
 TraceCmdString=
 DebugOptions=/z__MPLAB_DEBUG=1
-[File004]
+[File006]
 Location=C:\Users\sng\Documents\GitHub\PIC16F887-Labs\Lab 3\Lab 3.hex
+Folder=Output
+DeviceName=PIC16F877A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={96C98149-AA1B-4CF9-B967-FAE79CAB663C}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPASM Suite\mplink.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Lab 3.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-relocatable-code
+ToolArgsString=/o"$(BINDIR_)$(TARGETBASE).cof" /M"$(BINDIR_)$(TARGETBASE).map" /W
+TraceCmdString=
+DebugOptions=/z__MPLAB_DEBUG=1
+[File007]
+Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 3 - Nibble Comparator\Lab 3.lst
+Folder=Output
+DeviceName=PIC16F877A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={49D3CA3F-D9A3-4518-9943-226A347E8CC7}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPASM Suite\MPASMWIN.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Lab 3.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-relocatable-code
+ToolArgsString=
+TraceCmdString=
+DebugOptions=/d__DEBUG=1
+[File008]
+Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 3 - Nibble Comparator\Lab 3.cof
+Folder=Output
+DeviceName=PIC16F877A
+LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}
+LanguageToolID={96C98149-AA1B-4CF9-B967-FAE79CAB663C}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPASM Suite\mplink.exe
+PPAD=$(BINDIR)||$(TMPDIR)||$(AINDIR)||$(INCDIR)||$(LIBDIR)||$(LKRDIR)||
+SOLK=<src>|Lab 3.asm||<obj>||<lib>||<lkr>||
+SuiteArgsString=generate-relocatable-code
+ToolArgsString=/o"$(BINDIR_)$(TARGETBASE).cof" /M"$(BINDIR_)$(TARGETBASE).map" /W
+TraceCmdString=
+DebugOptions=/z__MPLAB_DEBUG=1
+[File009]
+Location=E:\Users\sng\Documents\GitHub\PIC16F877-Labs\Lab 3 - Nibble Comparator\Lab 3.hex
 Folder=Output
 DeviceName=PIC16F877A
 LanguageToolSuiteID={6B3DAA78-59C1-46DD-B6AA-DBDAE4E06484}

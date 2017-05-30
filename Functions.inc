@@ -55,3 +55,31 @@ MULTFF macro reg1, reg2, countAddress, resultAddress
 		GOTO loop
 	NOP
 endm
+
+;compute REG/W, remainder is ignored
+DIVWF macro REG, temp, result
+	CLRF temp
+	CLRF result
+	MOVWF temp
+	loop:
+		MOVF temp, 0
+		SUBWF REG
+		BTFSC STATUS, C
+		GOTO OP
+		exitm
+	OP:
+		INC result
+		GOTO loop
+endm
+
+;compute reg%w
+MODWF macro reg, temp, result
+	MOVFF reg, temp
+	loop:
+		SUBWF reg
+		BTFSC STATUS, C
+		goto loop
+	MOVFF reg, result
+	MOVFF temp, reg
+
+endm
